@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Tanya ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 24px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      width: 340px;
+      max-width: 92%;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      font-size: 22px;
+    }
+
+    h2 {
+      color: #ff4d6d;
+    }
+
+    .buttons {
+      margin-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    button {
+      padding: 14px;
+      font-size: 15px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      width: 48%;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      z-index: 3;
+    }
+
+    #noBtn {
+      background: #ddd;
+      position: relative;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .photo {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .tease {
+      margin-top: 10px;
+      color: #ff4d6d;
+      font-size: 14px;
+      min-height: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- QUESTION SCREEN -->
+<div class="container" id="questionBox">
+  <h1>💖 Tanya, do you want to be my Valentine? 💖</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes my darling 💕</button>
+    <button id="noBtn">No 😌</button>
+  </div>
+
+  <div class="tease" id="teaseText"></div>
+</div>
+
+<!-- LOVE SCREEN -->
+<div class="container hidden" id="loveBox">
+  <h1>Yay!! My queen 👑💖</h1>
+  <h2>I love you so much 😘</h2>
+
+  <!-- Image appears AFTER YES -->
+  <img src="WhatsApp Image 2026-01-03 at 7.30.45 PM.jpeg" class="photo" alt="Us ❤️">
+</div>
+
+<!-- ROYALTY-FREE ROMANTIC MUSIC -->
+<audio id="music" loop preload="auto">
+  <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_8f2a8c52d1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const teaseText = document.getElementById("teaseText");
+  const questionBox = document.getElementById("questionBox");
+  const loveBox = document.getElementById("loveBox");
+  const music = document.getElementById("music");
+
+  const teases = [
+    "Hehe… nice try 😏",
+    "No is not allowed 💕",
+    "Aww come on Tanya 😌",
+    "You know the answer 😘",
+    "Stop teasing me 😭❤️"
+  ];
+
+  function moveNoButton() {
+    const yesRect = yesBtn.getBoundingClientRect();
+    const noRect = noBtn.getBoundingClientRect();
+
+    let x, y, safe = false;
+
+    while (!safe) {
+      x = Math.random() * (window.innerWidth - noRect.width);
+      y = Math.random() * (window.innerHeight - noRect.height);
+
+      if (
+        x + noRect.width < yesRect.left - 20 ||
+        x > yesRect.right + 20 ||
+        y + noRect.height < yesRect.top - 20 ||
+        y > yesRect.bottom + 20
+      ) {
+        safe = true;
+      }
+    }
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    teaseText.innerText =
+      teases[Math.floor(Math.random() * teases.length)];
+  }
+
+  // Desktop + Mobile support
+  noBtn.addEventListener("mouseover", moveNoButton);
+  noBtn.addEventListener("touchstart", moveNoButton);
+
+  yesBtn.addEventListener("click", () => {
+    questionBox.classList.add("hidden");
+    loveBox.classList.remove("hidden");
+
+    music.volume = 0.7;
+    music.play().catch(() => {});
+  });
+</script>
+
+</body>
+</html>
